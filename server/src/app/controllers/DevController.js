@@ -5,6 +5,12 @@ class DevController {
   async store(req, res) {
     const { github_username, techs, latitude, longitude } = req.body;
 
+    const checkDevExists = await Dev.findOne({ github_username });
+
+    if (checkDevExists) {
+      return res.status(406).json({ error: 'Dev already registered' });
+    }
+
     try {
       const user = await axios.get(
         `https://api.github.com/users/${github_username}`

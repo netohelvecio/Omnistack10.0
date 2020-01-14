@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+import PointSchema from '../../utils/PointSchema';
+
 const DevSchema = new mongoose.Schema(
   {
     name: {
@@ -21,6 +23,10 @@ const DevSchema = new mongoose.Schema(
     techs: {
       type: [String],
       required: true,
+    },
+    location: {
+      type: PointSchema,
+      index: '2dsphere',
     },
   },
   {

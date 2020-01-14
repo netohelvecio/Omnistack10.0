@@ -49,15 +49,38 @@ class DevController {
   async destroy(req, res) {
     const { id } = req.params;
 
-    const dev = await Dev.findById(id);
+    const dev = await Dev.findByIdAndRemove(id);
 
     if (!dev) {
       return res.status(400).json({ error: 'Dev does not exist' });
     }
 
-    await dev.remove();
-
     return res.json({ message: 'Dev deleted' });
+  }
+
+  async update(req, res) {
+    const { id } = req.params;
+    const { techs, name, bio, latitude, longitude } = req.body;
+
+    const techsArray = techs.split(',').map(tech => tech.trim());
+
+    const location = {
+      type: 'Point',
+      coordinates: [longitude, latitude],
+    };
+
+    const dev = await Dev.findByIdAndUpdate(id, {
+      name,
+      bio,
+      techs: techsArray,
+      location,
+    });
+
+    if (!dev) {
+      return res.status(400).json({ error: 'Dev does not exist' });
+    }
+
+    return res.json(dev);
   }
 }
 

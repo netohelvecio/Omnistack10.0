@@ -39,6 +39,12 @@ class DevController {
       return res.status(404).json({ error: 'User not found' });
     }
   }
+
+  async index(req, res) {
+    const devs = await Dev.find();
+
+    return res.json(devs);
+  }
 }
 
 export default new DevController();

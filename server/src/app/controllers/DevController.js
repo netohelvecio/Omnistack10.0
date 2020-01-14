@@ -45,6 +45,20 @@ class DevController {
 
     return res.json(devs);
   }
+
+  async destroy(req, res) {
+    const { id } = req.params;
+
+    const dev = await Dev.findById(id);
+
+    if (!dev) {
+      return res.status(400).json({ error: 'Dev does not exist' });
+    }
+
+    await dev.remove();
+
+    return res.json({ message: 'Dev deleted' });
+  }
 }
 
 export default new DevController();

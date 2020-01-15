@@ -69,12 +69,16 @@ class DevController {
       coordinates: [longitude, latitude],
     };
 
-    const dev = await Dev.findByIdAndUpdate(id, {
-      name,
-      bio,
-      techs: techsArray,
-      location,
-    });
+    const dev = await Dev.findByIdAndUpdate(
+      id,
+      {
+        name,
+        bio,
+        techsf: techsArray,
+        location,
+      },
+      { new: true }
+    );
 
     if (!dev) {
       return res.status(400).json({ error: 'Dev does not exist' });

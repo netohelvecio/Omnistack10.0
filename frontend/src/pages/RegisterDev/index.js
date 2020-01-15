@@ -7,7 +7,7 @@ export default function RegisterDev() {
   return (
     <Wrapper>
       <Container>
-        <strong>Cadastrar</strong>
+        <strong>Cadastrar Dev</strong>
 
         <form>
           <label htmlFor="github_username">Usuário do GitHub</label>

@@ -74,7 +74,7 @@ class DevController {
       {
         name,
         bio,
-        techsf: techsArray,
+        techs: techsArray,
         location,
       },
       { new: true }

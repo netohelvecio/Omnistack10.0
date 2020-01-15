@@ -10,6 +10,8 @@ class Database {
       this.mongoConnection = mongoose.connect(process.env.MONGO_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
       });
     } catch (error) {
       console.log('Falha na conexão');

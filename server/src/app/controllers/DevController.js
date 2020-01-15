@@ -59,8 +59,11 @@ class DevController {
   }
 
   async update(req, res) {
+    const { filename: path } = req.file;
     const { id } = req.params;
     const { techs, name, bio, latitude, longitude } = req.body;
+
+    const pathUrl = `http://localhost:3333/files/${path}`;
 
     const techsArray = techs.split(',').map(tech => tech.trim());
 
@@ -76,6 +79,7 @@ class DevController {
         bio,
         techs: techsArray,
         location,
+        avatar_url: pathUrl,
       },
       { new: true }
     );

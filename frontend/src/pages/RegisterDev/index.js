@@ -1,11 +1,67 @@
-import React from 'react';
-import { MdAdd } from 'react-icons/md';
+import React, { useEffect, useState } from 'react';
+import { Form, Input } from '@rocketseat/unform';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 
+import api from '../../services/api';
+import history from '../../services/history';
 import Header from '../../components/Header';
 
 import { Container } from './styles';
 
+const schema = Yup.object().shape({
+  github_username: Yup.string().required('Usuário é obrigatório'),
+  techs: Yup.string().required('As tecnologias são obrigatórias'),
+  latitude: Yup.number()
+    .typeError('Compo deve ser um valor númerico')
+    .required('A latitude é obrtigatória'),
+  longitude: Yup.number()
+    .typeError('Compo deve ser um valor númerico')
+    .required('A longitude é obrtigatória'),
+});
+
 export default function RegisterDev() {
+  const [coordinates, setCordinates] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        const { latitude, longitude } = position.coords;
+
+        setCordinates({ latitude, longitude });
+      },
+      err => {
+        console.log(err);
+      },
+      {
+        timeout: 30000,
+      }
+    );
+  }, []);
+
+  async function handleSubmit({ github_username, techs, latitude, longitude }) {
+    try {
+      setLoading(true);
+
+      await api.post('/devs', {
+        github_username,
+        techs,
+        latitude,
+        longitude,
+      });
+
+      setLoading(false);
+      toast.success('Dev cadastrado com sucesso!');
+      history.push('/');
+    } catch (error) {
+      console.log(error);
+      toast.error('Erro ao cadastrar dev, verifique os dados!');
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <Header />
@@ -13,9 +69,9 @@ export default function RegisterDev() {
       <Container>
         <strong>Cadastrar Dev</strong>
 
-        <form>
+        <Form onSubmit={handleSubmit} initialData={coordinates} schema={schema}>
           <label htmlFor="github_username">Usuário do GitHub</label>
-          <input
+          <Input
             type="text"
             id="github_username"
             name="github_username"
@@ -23,7 +79,7 @@ export default function RegisterDev() {
           />
 
           <label htmlFor="techs">Tecnologias</label>
-          <input
+          <Input
             type="text"
             id="techs"
             name="techs"
@@ -33,29 +89,23 @@ export default function RegisterDev() {
           <div>
             <div>
               <label htmlFor="latitude">Latitude</label>
-              <input
-                type="text"
-                id="latitude"
-                name="latitude"
-                placeholder="Digite a latitude"
-              />
+              <Input type="number" step="any" id="latitude" name="latitude" />
             </div>
 
             <div>
               <label htmlFor="longitude">Longitude</label>
-              <input
-                type="text"
-                id="longitude"
-                name="longitude"
-                placeholder="Digite a longitude"
-              />
+              <Input type="number" step="any" id="longitude" name="longitude" />
             </div>
           </div>
 
           <button type="submit">
-            <MdAdd color="#fff" size={25} /> Cadastrar
+            {loading ? (
+              <AiOutlineLoading3Quarters size={20} color="#fff" />
+            ) : (
+              'Cadastrar'
+            )}
           </button>
-        </form>
+        </Form>
       </Container>
     </>
   );

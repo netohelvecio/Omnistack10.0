@@ -1,5 +1,14 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { darken } from 'polished';
+
+const rotate = keyframes`
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+`;
 
 export const Container = styled.div`
   margin: 30px auto;
@@ -27,6 +36,11 @@ export const Container = styled.div`
       margin: 8px 0;
     }
 
+    span {
+      margin-top: 3px;
+      color: #f80d46;
+    }
+
     input {
       background: #fff;
       border: 1px solid #ccc;
@@ -38,6 +52,12 @@ export const Container = styled.div`
         color: #acacac;
         font-size: 16px;
       }
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
 
     > div {
@@ -68,7 +88,9 @@ export const Container = styled.div`
       align-items: center;
 
       svg {
-        margin-right: 10px;
+        margin: 0px;
+        padding: 0px;
+        animation: ${rotate} 1s linear infinite;
       }
 
       &:hover {

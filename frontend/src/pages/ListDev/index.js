@@ -31,8 +31,8 @@ export default function ListDev() {
     loadDevs();
   }, []);
 
-  function handleEdit() {
-    history.push('/edit/123');
+  function handleEdit(dev) {
+    history.push(`/edit`, dev);
   }
 
   async function handleDelete(_id) {
@@ -88,7 +88,11 @@ export default function ListDev() {
                       />
                     </button>
                     <button type="button">
-                      <MdEdit color="#36c95f" size={25} onClick={handleEdit} />
+                      <MdEdit
+                        color="#36c95f"
+                        size={25}
+                        onClick={() => handleEdit(dev)}
+                      />
                     </button>
                   </div>
                 </Options>

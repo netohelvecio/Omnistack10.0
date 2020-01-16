@@ -27,6 +27,11 @@ export const Container = styled.div`
       margin: 8px 0;
     }
 
+    span {
+      margin-top: 3px;
+      color: #f80d46;
+    }
+
     input {
       background: #fff;
       border: 1px solid #ccc;
@@ -97,6 +102,38 @@ export const Container = styled.div`
 
     &:hover {
       background: ${darken(0.05, '#f64c75')};
+    }
+  }
+`;
+
+export const AvatarContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const AvatarInput = styled.div`
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 10px;
+
+  label {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    img {
+      height: 120px;
+      width: 120px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      background: #eee;
+    }
+
+    input {
+      display: none;
     }
   }
 `;

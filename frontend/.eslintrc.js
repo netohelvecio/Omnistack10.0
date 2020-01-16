@@ -26,5 +26,6 @@ module.exports = {
     camelcase: 'off',
     'no-underscore-dangle': 'off',
     'no-alert': 'off',
+    'react/forbid-prop-types': 'off',
   },
 };

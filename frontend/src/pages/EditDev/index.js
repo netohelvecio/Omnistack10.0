@@ -20,7 +20,9 @@ export default function EditDev() {
         <label htmlFor="name">Nome</label>
         <input type="text" id="name" name="name" />
 
-        <label htmlFor="techs">Tecnologias</label>
+        <label htmlFor="techs">
+          Tecnologias (separe as teconolgias por vírgula)
+        </label>
         <input type="text" id="techs" name="techs" />
 
         <label htmlFor="bio">Bio</label>

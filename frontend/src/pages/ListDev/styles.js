@@ -1,4 +1,13 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const rotate = keyframes`
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+`;
 
 export const Container = styled.div`
   margin: 0 auto;
@@ -24,6 +33,7 @@ export const Dev = styled.li`
 
     img {
       width: 50px;
+      height: 50px;
       border-radius: 50%;
       margin-right: 10px;
     }
@@ -78,5 +88,25 @@ export const Options = styled.div`
         margin-left: 15px;
       }
     }
+  }
+`;
+
+export const ContainerLoading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 60px 0;
+
+  span {
+    margin-left: 10px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  svg {
+    margin: 0px;
+    padding: 0px;
+    animation: ${rotate} 1s linear infinite;
   }
 `;

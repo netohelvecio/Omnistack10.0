@@ -78,7 +78,9 @@ export default function RegisterDev() {
             placeholder="Digite o usuário do GitHub"
           />
 
-          <label htmlFor="techs">Tecnologias</label>
+          <label htmlFor="techs">
+            Tecnologias (separe as teconolgias por vírgula)
+          </label>
           <Input
             type="text"
             id="techs"

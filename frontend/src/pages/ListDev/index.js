@@ -1,59 +1,101 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdDelete, MdEdit } from 'react-icons/md';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { toast } from 'react-toastify';
 
 import history from '../../services/history';
+import api from '../../services/api';
 import Header from '../../components/Header';
 
-import { Container, Dev, Options } from './styles';
+import { Container, Dev, Options, ContainerLoading } from './styles';
 
 export default function ListDev() {
-  function handleEdit() {
-    history.push('/edit');
+  const [devs, setDevs] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  async function loadDevs() {
+    try {
+      setLoading(true);
+
+      const response = await api.get('/devs');
+      setDevs(response.data);
+
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast.error('Error ao listar devs!');
+    }
   }
 
-  function handleDelete() {}
+  useEffect(() => {
+    loadDevs();
+  }, []);
+
+  function handleEdit() {
+    history.push('/edit/123');
+  }
+
+  async function handleDelete(_id) {
+    const result = window.confirm('Deseja deletar dev?');
+    if (result) {
+      try {
+        await api.delete(`devs/${_id}`);
+        loadDevs();
+        toast.success('Dev deletado!');
+      } catch (error) {
+        console.log(error);
+        toast.error('Error ao deletar dev!');
+      }
+    }
+  }
 
   return (
     <>
       <Header />
 
       <Container>
-        <ul>
-          <Dev>
-            <header>
-              <img
-                src="https://api.adorable.io/avatars/124/omegalul.png"
-                alt="Avatar"
-              />
+        {loading ? (
+          <ContainerLoading>
+            <AiOutlineLoading3Quarters color="#fff" size={40} />
+            <span>Carregando...</span>
+          </ContainerLoading>
+        ) : (
+          <ul>
+            {devs.map(dev => (
+              <Dev key={dev._id}>
+                <header>
+                  <img src={dev.avatar_url} alt={dev.name} />
 
-              <div>
-                <strong>Helvécio Neto</strong>
-                <span>NodeJS, React, React Native</span>
-              </div>
-            </header>
+                  <div>
+                    <strong>{dev.name}</strong>
+                    <span>{dev.techs.join(', ')}</span>
+                  </div>
+                </header>
 
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse
-              numquam voluptatem fugit blanditiis quibusdam, facilis accusamus
-              nulla excepturi ratione libero incidunt necessitatibus?
-            </p>
+                <p>{dev.bio}</p>
 
-            <Options>
-              <a href="https://github.com/netohelvecio">
-                Acessar perfil GitHub
-              </a>
+                <Options>
+                  <a href={`https://github.com/${dev.github_username}`}>
+                    Acessar perfil GitHub
+                  </a>
 
-              <div>
-                <button type="button">
-                  <MdDelete color="#f64c75" size={25} onClick={handleDelete} />
-                </button>
-                <button type="button">
-                  <MdEdit color="#36c95f" size={25} onClick={handleEdit} />
-                </button>
-              </div>
-            </Options>
-          </Dev>
-        </ul>
+                  <div>
+                    <button type="button">
+                      <MdDelete
+                        color="#f64c75"
+                        size={25}
+                        onClick={() => handleDelete(dev._id)}
+                      />
+                    </button>
+                    <button type="button">
+                      <MdEdit color="#36c95f" size={25} onClick={handleEdit} />
+                    </button>
+                  </div>
+                </Options>
+              </Dev>
+            ))}
+          </ul>
+        )}
       </Container>
     </>
   );

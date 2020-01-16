@@ -1,10 +1,15 @@
 import React from 'react';
 
+import history from '../../services/history';
 import AvatarInput from '../../components/AvatarInput';
 
 import { Container, Coordinates } from './styles';
 
 export default function EditDev() {
+  function handleCancelation() {
+    history.push('/');
+  }
+
   return (
     <Container>
       <strong>Editar Dev</strong>
@@ -36,7 +41,9 @@ export default function EditDev() {
         <button type="submit">Salvar</button>
       </form>
 
-      <button type="button">Cancelar</button>
+      <button type="button" onClick={handleCancelation}>
+        Cancelar
+      </button>
     </Container>
   );
 }

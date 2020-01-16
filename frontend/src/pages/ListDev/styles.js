@@ -48,15 +48,35 @@ export const Dev = styled.li`
     font-size: 16px;
     color: #666;
     line-height: 20px;
-    margin: 10px 0;
+    margin: 8px 0;
   }
+`;
+
+export const Options = styled.div`
+  display: flex;
+  justify-content: space-between;
 
   a {
     color: #7159c1;
-    margin-top: 20px;
+    margin-top: 10px;
 
     &:hover {
       opacity: 0.9;
+    }
+  }
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    button {
+      border: 0;
+      background: #fff;
+
+      & + button {
+        margin-left: 15px;
+      }
     }
   }
 `;

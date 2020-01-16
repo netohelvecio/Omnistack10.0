@@ -1,99 +1,105 @@
 import React from 'react';
 
+import Header from '../../components/Header';
+
 import { Container, Dev } from './styles';
 
 export default function ListDev() {
   return (
-    <Container>
-      <ul>
-        <Dev>
-          <header>
-            <img
-              src="https://api.adorable.io/avatars/124/omegalul.png"
-              alt="Avatar"
-            />
+    <>
+      <Header />
 
-            <div>
-              <strong>Helvécio Neto</strong>
-              <span>NodeJS, React, React Native</span>
-            </div>
-          </header>
+      <Container>
+        <ul>
+          <Dev>
+            <header>
+              <img
+                src="https://api.adorable.io/avatars/124/omegalul.png"
+                alt="Avatar"
+              />
 
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse
-            numquam voluptatem fugit blanditiis quibusdam, facilis accusamus
-            nulla excepturi ratione libero incidunt necessitatibus?
-          </p>
+              <div>
+                <strong>Helvécio Neto</strong>
+                <span>NodeJS, React, React Native</span>
+              </div>
+            </header>
 
-          <a href="https://github.com/netohelvecio">Acessar perfil GitHub</a>
-        </Dev>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse
+              numquam voluptatem fugit blanditiis quibusdam, facilis accusamus
+              nulla excepturi ratione libero incidunt necessitatibus?
+            </p>
 
-        <Dev>
-          <header>
-            <img
-              src="https://api.adorable.io/avatars/124/omegalul.png"
-              alt="Avatar"
-            />
+            <a href="https://github.com/netohelvecio">Acessar perfil GitHub</a>
+          </Dev>
 
-            <div>
-              <strong>Helvécio Neto</strong>
-              <span>NodeJS, React, React Native</span>
-            </div>
-          </header>
+          <Dev>
+            <header>
+              <img
+                src="https://api.adorable.io/avatars/124/omegalul.png"
+                alt="Avatar"
+              />
 
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse
-            numquam voluptatem fugit blanditiis quibusdam, facilis accusamus
-            nulla excepturi ratione libero incidunt necessitatibus?
-          </p>
+              <div>
+                <strong>Helvécio Neto</strong>
+                <span>NodeJS, React, React Native</span>
+              </div>
+            </header>
 
-          <a href="https://github.com/netohelvecio">Acessar perfil GitHub</a>
-        </Dev>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse
+              numquam voluptatem fugit blanditiis quibusdam, facilis accusamus
+              nulla excepturi ratione libero incidunt necessitatibus?
+            </p>
 
-        <Dev>
-          <header>
-            <img
-              src="https://api.adorable.io/avatars/124/omegalul.png"
-              alt="Avatar"
-            />
+            <a href="https://github.com/netohelvecio">Acessar perfil GitHub</a>
+          </Dev>
 
-            <div>
-              <strong>Helvécio Neto</strong>
-              <span>NodeJS, React, React Native</span>
-            </div>
-          </header>
+          <Dev>
+            <header>
+              <img
+                src="https://api.adorable.io/avatars/124/omegalul.png"
+                alt="Avatar"
+              />
 
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse
-            numquam voluptatem fugit blanditiis quibusdam, facilis accusamus
-            nulla excepturi ratione libero incidunt necessitatibus?
-          </p>
+              <div>
+                <strong>Helvécio Neto</strong>
+                <span>NodeJS, React, React Native</span>
+              </div>
+            </header>
 
-          <a href="https://github.com/netohelvecio">Acessar perfil GitHub</a>
-        </Dev>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse
+              numquam voluptatem fugit blanditiis quibusdam, facilis accusamus
+              nulla excepturi ratione libero incidunt necessitatibus?
+            </p>
 
-        <Dev>
-          <header>
-            <img
-              src="https://api.adorable.io/avatars/124/omegalul.png"
-              alt="Avatar"
-            />
+            <a href="https://github.com/netohelvecio">Acessar perfil GitHub</a>
+          </Dev>
 
-            <div>
-              <strong>Helvécio Neto</strong>
-              <span>NodeJS, React, React Native</span>
-            </div>
-          </header>
+          <Dev>
+            <header>
+              <img
+                src="https://api.adorable.io/avatars/124/omegalul.png"
+                alt="Avatar"
+              />
 
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse
-            numquam voluptatem fugit blanditiis quibusdam, facilis accusamus
-            nulla excepturi ratione libero incidunt necessitatibus?
-          </p>
+              <div>
+                <strong>Helvécio Neto</strong>
+                <span>NodeJS, React, React Native</span>
+              </div>
+            </header>
 
-          <a href="https://github.com/netohelvecio">Acessar perfil GitHub</a>
-        </Dev>
-      </ul>
-    </Container>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse
+              numquam voluptatem fugit blanditiis quibusdam, facilis accusamus
+              nulla excepturi ratione libero incidunt necessitatibus?
+            </p>
+
+            <a href="https://github.com/netohelvecio">Acessar perfil GitHub</a>
+          </Dev>
+        </ul>
+      </Container>
+    </>
   );
 }

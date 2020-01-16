@@ -1,11 +1,15 @@
 import React from 'react';
 import { MdAdd } from 'react-icons/md';
 
-import { Container, Wrapper } from './styles';
+import Header from '../../components/Header';
+
+import { Container } from './styles';
 
 export default function RegisterDev() {
   return (
-    <Wrapper>
+    <>
+      <Header />
+
       <Container>
         <strong>Cadastrar Dev</strong>
 
@@ -53,6 +57,6 @@ export default function RegisterDev() {
           </button>
         </form>
       </Container>
-    </Wrapper>
+    </>
   );
 }

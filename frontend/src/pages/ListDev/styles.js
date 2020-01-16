@@ -39,7 +39,7 @@ export const Dev = styled.li`
 
       span {
         font-size: 14px;
-        color: #aaa;
+        color: #999;
       }
     }
   }
@@ -47,13 +47,12 @@ export const Dev = styled.li`
   p {
     font-size: 16px;
     color: #666;
-    max-width: 400px;
-    line-height: 18px;
+    line-height: 20px;
     margin: 10px 0;
   }
 
   a {
-    color: #555;
+    color: #7159c1;
     margin-top: 20px;
 
     &:hover {

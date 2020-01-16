@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 
 import redirect from '../../services/history';
 import api from '../../services/api';
-// import AvatarInput from '../../components/AvatarInput';
 
 import { Container, Coordinates, AvatarContainer, AvatarInput } from './styles';
 
@@ -24,6 +23,8 @@ const schema = Yup.object().shape({
 
 export default function EditDev({ history }) {
   const [initalData, setInitialData] = useState({});
+  const [file, setFile] = useState(null);
+  const [avatarPreview, setAvatarPreview] = useState(null);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -31,13 +32,13 @@ export default function EditDev({ history }) {
         const { latitude, longitude } = position.coords;
         const { techs, name, bio, avatar_url, _id } = history.location.state;
 
+        setAvatarPreview(avatar_url);
         setInitialData({
           latitude,
           longitude,
           techs,
           name,
           bio,
-          avatar_url,
           _id,
         });
       },
@@ -56,19 +57,40 @@ export default function EditDev({ history }) {
 
   async function handleSubmit({ name, bio, techs, latitude, longitude }) {
     try {
-      const response = await api.put(`/devs/${initalData._id}`, {
-        name,
-        bio,
-        techs,
-        latitude,
-        longitude,
-      });
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('name', name);
+      formData.append('bio', bio);
+      formData.append('techs', techs);
+      formData.append('latitude', latitude);
+      formData.append('longitude', longitude);
 
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      };
+
+      await api.put(`/devs/${initalData._id}`, formData, config);
+
+      redirect.push('/');
       toast.success('Dev atualizado!');
     } catch (error) {
       console.log(error);
       toast.error('Error ao atualizar dev, verfique os dados');
     }
+  }
+
+  function handleChange(e) {
+    const reader = new FileReader();
+    const avatar = e.target.files[0];
+
+    reader.onloadend = () => {
+      setFile(avatar);
+      setAvatarPreview(reader.result);
+    };
+
+    reader.readAsDataURL(avatar);
   }
 
   return (
@@ -80,13 +102,18 @@ export default function EditDev({ history }) {
           <label htmlFor="avatar">
             <img
               src={
-                initalData.avatar_url ||
-                'https://api.adorable.io/avatars/140/kappa.png'
+                avatarPreview || 'https://api.adorable.io/avatars/140/kappa.png'
               }
               alt=""
             />
 
-            <input type="file" id="avatar" accept="image/*" />
+            <input
+              id="avatar"
+              type="file"
+              name="file"
+              accept="image/*"
+              onChange={e => handleChange(e)}
+            />
           </label>
         </AvatarInput>
       </AvatarContainer>

@@ -5,9 +5,21 @@ import {
   requestPermissionsAsync,
   getCurrentPositionAsync,
 } from 'expo-location';
+import { MaterialIcons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 
-import { DevAvatar, Container, Name, Bio, Techs } from './styles';
+import api from '../../services/api';
+
+import {
+  DevAvatar,
+  Container,
+  Name,
+  Bio,
+  Techs,
+  Form,
+  Input,
+  SubmitButton,
+} from './styles';
 
 const styles = StyleSheet.create({
   map: {
@@ -17,6 +29,8 @@ const styles = StyleSheet.create({
 
 export default function Main({ navigation }) {
   const [currentRegion, setCurrentRegion] = useState(null);
+  const [devs, setDevs] = useState([]);
+  const [techs, setTechs] = useState();
 
   useEffect(() => {
     async function loadInitialPosition() {
@@ -32,8 +46,8 @@ export default function Main({ navigation }) {
         setCurrentRegion({
           latitude,
           longitude,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02,
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
         });
       }
     }
@@ -41,36 +55,80 @@ export default function Main({ navigation }) {
     loadInitialPosition();
   }, []);
 
+  async function loadDevs() {
+    const { latitude, longitude } = currentRegion;
+
+    const response = await api.get('/search', {
+      params: {
+        latitude,
+        longitude,
+        techs,
+      },
+    });
+
+    setDevs(response.data);
+  }
+
+  function handleRegionChanged(region) {
+    setCurrentRegion(region);
+  }
+
   if (!currentRegion) {
     return null;
   }
 
   return (
-    <MapView initialRegion={currentRegion} style={styles.map}>
-      <Marker coordinate={{ latitude: -12.9187292, longitude: -38.3979505 }}>
-        <DevAvatar
-          source={{
-            uri: 'https://api.adorable.io/avatars/50/netohelvecio.png',
-          }}
-        />
+    <>
+      <MapView
+        onRegionChangeComplete={handleRegionChanged}
+        initialRegion={currentRegion}
+        style={styles.map}
+      >
+        {devs.map(dev => (
+          <Marker
+            key={dev._id}
+            coordinate={{
+              longitude: dev.location.coordinates[0],
+              latitude: dev.location.coordinates[1],
+            }}
+          >
+            <DevAvatar
+              source={{
+                uri: dev.avatar_url,
+              }}
+            />
 
-        <Callout
-          onPress={() => {
-            navigation.navigate('Profile', { github_username: 'netohelvecio' });
-          }}
-        >
-          <Container>
-            <Name>Helvécio Neto</Name>
-            <Bio>
-              Desenvolvedor NodeJS, React e React Native. Técnico em
-              Desenvolvimento de Sistemas - Senai Cetind. Procurando novos
-              desafios na área de programação.
-            </Bio>
-            <Techs>React, React Native, NodeJS</Techs>
-          </Container>
-        </Callout>
-      </Marker>
-    </MapView>
+            <Callout
+              onPress={() => {
+                navigation.navigate('Profile', {
+                  github_username: dev.github_username,
+                });
+              }}
+            >
+              <Container>
+                <Name>{dev.github_username}</Name>
+                <Bio>{dev.bio}</Bio>
+                <Techs>{dev.techs.join(', ')}</Techs>
+              </Container>
+            </Callout>
+          </Marker>
+        ))}
+      </MapView>
+
+      <Form>
+        <Input
+          placeholder="Buscar devs por techs..."
+          autoCapitalize="words"
+          autoCorrect={false}
+          returnKeyType="send"
+          onSubmitEditing={loadDevs}
+          onChangeText={setTechs}
+        />
+        <SubmitButton onPress={loadDevs}>
+          <MaterialIcons name="my-location" color="#fff" size={22} />
+        </SubmitButton>
+      </Form>
+    </>
   );
 }
 

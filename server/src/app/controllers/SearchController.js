@@ -16,12 +16,12 @@ class SearchController {
             type: 'Point',
             coordinates: [longitude, latitude],
           },
-          $maxDistance: 10000,
+          $maxDistance: 15000,
         },
       },
     });
 
-    return res.json({ devs });
+    return res.json(devs);
   }
 }
 

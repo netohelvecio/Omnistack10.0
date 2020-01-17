@@ -1,12 +1,18 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { WebView } from 'react-native-webview';
+import PropTypes from 'prop-types';
 
-// import { Container } from './styles';
+export default function Profile({ navigation }) {
+  const username = navigation.getParam('github_username');
 
-export default function Profile() {
   return (
-    <View>
-      <Text>Profile</Text>
-    </View>
+    <WebView
+      style={{ flex: 1 }}
+      source={{ uri: `https://github.com/${username}` }}
+    />
   );
 }
+
+Profile.propTypes = {
+  navigation: PropTypes.object.isRequired,
+};

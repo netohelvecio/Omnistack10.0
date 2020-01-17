@@ -5,6 +5,7 @@ import {
   requestPermissionsAsync,
   getCurrentPositionAsync,
 } from 'expo-location';
+import PropTypes from 'prop-types';
 
 import { DevAvatar, Container, Name, Bio, Techs } from './styles';
 
@@ -72,3 +73,7 @@ export default function Main({ navigation }) {
     </MapView>
   );
 }
+
+Main.propTypes = {
+  navigation: PropTypes.object.isRequired,
+};

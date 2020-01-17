@@ -63,7 +63,7 @@ class DevController {
     const { id } = req.params;
     const { techs, name, bio, latitude, longitude } = req.body;
 
-    const pathUrl = `http://localhost:3333/files/${path}`;
+    const pathUrl = `http://192.168.0.100:3333/files/${path}`;
 
     const techsArray = techs.split(',').map(tech => tech.trim());
 

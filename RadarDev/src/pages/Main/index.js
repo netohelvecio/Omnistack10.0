@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import {
   requestPermissionsAsync,
@@ -31,6 +31,7 @@ export default function Main({ navigation }) {
   const [currentRegion, setCurrentRegion] = useState(null);
   const [devs, setDevs] = useState([]);
   const [techs, setTechs] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function loadInitialPosition() {
@@ -56,17 +57,34 @@ export default function Main({ navigation }) {
   }, []);
 
   async function loadDevs() {
-    const { latitude, longitude } = currentRegion;
+    try {
+      setLoading(true);
 
-    const response = await api.get('/search', {
-      params: {
-        latitude,
-        longitude,
-        techs,
-      },
-    });
+      const { latitude, longitude } = currentRegion;
 
-    setDevs(response.data);
+      if (!techs) {
+        Alert.alert('Digite uma tecnologia!');
+        setLoading(false);
+
+        return;
+      }
+
+      const response = await api.get('/search', {
+        params: {
+          latitude,
+          longitude,
+          techs,
+        },
+      });
+
+      setTechs('');
+      setLoading(false);
+      setDevs(response.data);
+    } catch (error) {
+      Alert.alert('Erro!', 'Erro ao buscar devs');
+      setTechs('');
+      setLoading(false);
+    }
   }
 
   function handleRegionChanged(region) {
@@ -106,7 +124,7 @@ export default function Main({ navigation }) {
               }}
             >
               <Container>
-                <Name>{dev.github_username}</Name>
+                <Name>{dev.name}</Name>
                 <Bio>{dev.bio}</Bio>
                 <Techs>{dev.techs.join(', ')}</Techs>
               </Container>
@@ -123,9 +141,14 @@ export default function Main({ navigation }) {
           returnKeyType="send"
           onSubmitEditing={loadDevs}
           onChangeText={setTechs}
+          value={techs}
         />
         <SubmitButton onPress={loadDevs}>
-          <MaterialIcons name="my-location" color="#fff" size={22} />
+          {loading ? (
+            <ActivityIndicator color="#fff" size={22} />
+          ) : (
+            <MaterialIcons name="my-location" color="#fff" size={22} />
+          )}
         </SubmitButton>
       </Form>
     </>

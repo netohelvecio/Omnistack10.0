@@ -68,7 +68,11 @@ export default function ListDev() {
 
                   <div>
                     <strong>{dev.name}</strong>
-                    <span>{dev.techs.join(', ')}</span>
+                    <span>
+                      {dev.techs
+                        .map(tech => tech.replace(/^./, tech[0].toUpperCase()))
+                        .join(', ')}
+                    </span>
                   </div>
                 </header>
 

@@ -4,7 +4,7 @@ class SearchController {
   async index(req, res) {
     const { latitude, longitude, techs } = req.query;
 
-    const techsArray = techs.split(',').map(tech => tech.trim());
+    const techsArray = techs.split(',').map(tech => tech.trim().toLowerCase());
 
     const devs = await Dev.find({
       techs: {

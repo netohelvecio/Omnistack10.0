@@ -126,7 +126,11 @@ export default function Main({ navigation }) {
               <Container>
                 <Name>{dev.name}</Name>
                 <Bio>{dev.bio}</Bio>
-                <Techs>{dev.techs.join(', ')}</Techs>
+                <Techs>
+                  {dev.techs
+                    .map(tech => tech.replace(/^./, tech[0].toUpperCase()))
+                    .join(', ')}
+                </Techs>
               </Container>
             </Callout>
           </Marker>

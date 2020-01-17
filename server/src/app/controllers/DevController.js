@@ -18,7 +18,9 @@ class DevController {
 
       const { name, avatar_url, bio } = user.data;
 
-      const techsArray = techs.split(',').map(tech => tech.trim());
+      const techsArray = techs
+        .split(',')
+        .map(tech => tech.trim().toLowerCase());
 
       const location = {
         type: 'Point',
@@ -65,7 +67,7 @@ class DevController {
 
     const pathUrl = `http://192.168.0.100:3333/files/${path}`;
 
-    const techsArray = techs.split(',').map(tech => tech.trim());
+    const techsArray = techs.split(',').map(tech => tech.trim().toLowerCase());
 
     const location = {
       type: 'Point',

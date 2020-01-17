@@ -5,10 +5,32 @@ import Main from './pages/Main';
 import Profile from './pages/Profile';
 
 const Routes = createAppContainer(
-  createStackNavigator({
-    Main,
-    Profile,
-  })
+  createStackNavigator(
+    {
+      Main: {
+        screen: Main,
+        navigationOptions: {
+          title: 'RadarDev',
+        },
+      },
+      Profile: {
+        screen: Profile,
+        navigationOptions: {
+          title: 'Profile',
+        },
+      },
+    },
+    {
+      defaultNavigationOptions: {
+        headerTitleAlign: 'center',
+        headerTintColor: '#fff',
+        headerBackTitleVisible: false,
+        headerStyle: {
+          backgroundColor: '#7159c1',
+        },
+      },
+    }
+  )
 );
 
 export default Routes;

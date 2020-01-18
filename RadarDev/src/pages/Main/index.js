@@ -9,6 +9,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 
 import api from '../../services/api';
+import { connect, disconnect, subscribeToNewDevs } from '../../services/socket';
 
 import {
   DevAvatar,
@@ -56,6 +57,18 @@ export default function Main({ navigation }) {
     loadInitialPosition();
   }, []);
 
+  useEffect(() => {
+    subscribeToNewDevs(dev => setDevs([...devs, dev]));
+  }, [devs]);
+
+  function setupWebsocket() {
+    disconnect();
+
+    const { latitude, longitude } = currentRegion;
+
+    connect(latitude, longitude, techs);
+  }
+
   async function loadDevs() {
     try {
       setLoading(true);
@@ -77,12 +90,11 @@ export default function Main({ navigation }) {
         },
       });
 
-      setTechs('');
       setLoading(false);
       setDevs(response.data);
+      setupWebsocket();
     } catch (error) {
       Alert.alert('Erro!', 'Erro ao buscar devs');
-      setTechs('');
       setLoading(false);
     }
   }
@@ -145,7 +157,6 @@ export default function Main({ navigation }) {
           returnKeyType="send"
           onSubmitEditing={loadDevs}
           onChangeText={setTechs}
-          value={techs}
         />
         <SubmitButton onPress={loadDevs}>
           {loading ? (

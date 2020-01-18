@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Dev from '../models/Dev';
 
+import { findConnections, sendMessage } from '../../websocket';
+
 class DevController {
   async store(req, res) {
     const { github_username, techs, latitude, longitude } = req.body;
@@ -35,6 +37,13 @@ class DevController {
         techs: techsArray,
         location,
       });
+
+      const sendSocketMessageTo = findConnections(
+        { latitude, longitude },
+        techsArray
+      );
+
+      sendMessage(sendSocketMessageTo, 'new-dev', dev);
 
       return res.json(dev);
     } catch (error) {
